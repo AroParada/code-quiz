@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>code quiz game</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <form class="form-inline">
+          <button class="btn btn-outline-success" type="button">View Highscores</button> 
+          <H2>Code Quiz</H2>
+
+        </form>
+      </nav>
+    <div class="container">
+        <div class="row">
+          <div class="col align-self-center">
+            <div class="card">
+                <h5 class="card-header">
+                </h5>
+                <div class="card-body">
+                  <h5 class="card-title">coding quiz challenge</h5>
+                  <p class="card-text">Try to answer the following code-related questions within the time limit.
+                      Keep in mind that incorrect answers will penalize your score/time by ten seconds!
+                  </p>
+                  <a href="#" id="generate" class="btn btn-primary">Start!</a>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <h5 class="time"></h5>
+      <script> 
+var timeEl = document.querySelector(".time");
+var mainEl = document.getElementById("main");
+
+var secondsLeft = 60;
+
+function setTime() {
+  var timerInterval = setInterval(function() {
+    secondsLeft--;
+    timeEl.textContent = secondsLeft + " seconds left";
+
+    if(secondsLeft === 0) {
+      clearInterval(timerInterval);
+      sendMessage();
+    }
+
+  }, 1000);
+}
+
+function sendMessage() {
+  timeEl.textContent = " ";
+
+  var imgEl = document.createElement("img");
+
+  imgEl.setAttribute("src", "images/image_1.jpg");
+  mainEl.appendChild(imgEl);
+
+}
+
+setTime();
+</script>
+</body>
+</html>
