@@ -25,10 +25,10 @@
                     <div id="question-container" >
                     <div id="question">Question</div>
                     <div id="answer-buttons">
-                      <button class="btn">Answer 1</button>
-                      <button class="btn">Answer 2</button>
-                      <button class="btn">Answer 3</button>
-                      <button class="btn">Answer 4</button>
+                      <button id="one" class="btn">Answer 1</button>
+                      <button id="two" class="btn">Answer 2</button>
+                      <button id="three"class="btn">Answer 3</button>
+                      <button id="four" class="btn">Answer 4</button>
                    </div>
                   </div>
                </div>
@@ -45,7 +45,7 @@ const startButton = document.getElementById('start-btn')
 const cardBodyElement = document.getElementById('card-body')
 const questionElement = document.getElementById('question')
 const answerButtonsElement = document.getElementById('answer-buttons')
-
+var answerone = document.getElementById('one')
 let shuffledQuestions, currentQuestionIndex
 
 startButton.addEventListener('click', startGame)
@@ -65,16 +65,17 @@ showQuestion(shuffledQuestions[currentQuestionIndex])
 
 function showQuestion(question) {
   questionElement.innerText = question.question
-  question.answers.forEach(answer => {
-    const button = document.createElement('button')
-    button.innerText = answer.text
-    button.classList.add('btn')
-    if (answer.correct) {
+  answerone.textContent= questions[currentQuestionIndex].answers[0].text
+  // question.answers.forEach(answer => {
+  //   const button = document.createElement('button')
+  //   button.innerText = answer.text
+  //   button.classList.add('btn')
+  //   if (answer.correct) {
     
-    }
-    button.addEventListener('click', selectAnswer)
-    answerButtonsElement.appendChild(button)
-  })
+  //   }
+  //   button.addEventListener('click', selectAnswer)
+  //   answerButtonsElement.appendChild(button)
+  // })
 }
 
 function selectorAnswer(e) {
