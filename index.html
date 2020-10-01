@@ -10,7 +10,7 @@
 <body>
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
-          <button class="btn btn-outline-success" type="button">View Highscores</button> 
+          <a href="highscores.html" class="btn btn-outline-success" role="button" aria-pressed="true">View Highscores</a> 
           <H2>Code Quiz</H2>
 
         </form>
@@ -35,18 +35,54 @@
                 <div class="controls">
                   <button id="start-btn" class="start-btn btn">Start!</button>
                   <button id="next-btn" class="next-btn btn hide">Next</button>
-                  <h6>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</h6>
+                  <h6 id="text"> Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</h6>
               </div>
+              <div id="timer" class="hide">timer</div>
            </div>
          </div>
-      <!-- <h5 class="time"></h5> -->
+         <div class="col-lg-12" class="row">
+          <div id="choices"></div>
+      </div>
+      <div class="row" id="results"></div>
+
+      <div id="gameOver" style="display:none;">
+          <h3 class="alert alert-success">Good Job!</h3>
+          <h5>Your score:
+              <h5 id=finalTime></h5>
+          </h5>
+          <h5>Enter Nickname:
+              <input id="userName" type="text">
+              <button id="userInfo" class="btn btn-success">submit</button>
+          </h5>
+      </div>
+  </div>
       <script> 
 const startButton = document.getElementById('start-btn')
 const cardBodyElement = document.getElementById('card-body')
 const questionElement = document.getElementById('question')
 const answerButtonsElement = document.getElementById('answer-buttons')
+const text = document.getElementById('text')
+
 var answerone = document.getElementById('one')
+var answertwo = document.getElementById('two')
+var answerthree = document.getElementById('three')
+var answerfour = document.getElementById('four')
 let shuffledQuestions, currentQuestionIndex
+
+//timer vars 
+var timeElement= document.getElementById("timer");
+var secondsLeft = 60;
+
+
+//timer start functiom
+var myCountDown = setInterval(function(){
+    secondsLeft--;
+    timeElement.textContent= secondsLeft + "seconds left until the end";
+
+    if(secondsLeft===0){
+        clearInterval(myCountDown)
+    }
+}, 1000)//milliseceonds 
 
 startButton.addEventListener('click', startGame)
 
@@ -56,8 +92,11 @@ startButton.classList.add('hide')
 shuffledQuestions = questions.sort(() => Math.random() - .5)
 currentQuestionIndex = 0
 cardBodyElement.classList.remove('hide')
+text.classList.add('hide')
+timeElement.classList.remove ("hide");
 setNextQuestion()
-}
+} 
+
 
 function setNextQuestion() {
 showQuestion(shuffledQuestions[currentQuestionIndex])
@@ -66,16 +105,10 @@ showQuestion(shuffledQuestions[currentQuestionIndex])
 function showQuestion(question) {
   questionElement.innerText = question.question
   answerone.textContent= questions[currentQuestionIndex].answers[0].text
-  // question.answers.forEach(answer => {
-  //   const button = document.createElement('button')
-  //   button.innerText = answer.text
-  //   button.classList.add('btn')
-  //   if (answer.correct) {
-    
-  //   }
-  //   button.addEventListener('click', selectAnswer)
-  //   answerButtonsElement.appendChild(button)
-  // })
+  answertwo.textContent= questions[currentQuestionIndex].answers[1].text
+  answerthree.textContent= questions[currentQuestionIndex].answers[2].text
+  answerfour.textContent= questions[currentQuestionIndex].answers[3].text
+ 
 }
 
 function selectorAnswer(e) {
@@ -121,7 +154,7 @@ const questions = [
     ]
   },
   {
-    question: 'a very useful tool used during development and debuffing for printing content to the debugger is:',
+    question: 'A very useful tool used during development and debuffing for printing content to the debugger is:',
     answers: [
       { text: 'JavaScript', correct: false },
       { text: 'terminal', correct: false },
