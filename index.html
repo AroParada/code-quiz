@@ -57,17 +57,28 @@
       </div>
   </div>
       <script> 
+// variables
 const startButton = document.getElementById('start-btn')
 const cardBodyElement = document.getElementById('card-body')
 const questionElement = document.getElementById('question')
 const answerButtonsElement = document.getElementById('answer-buttons')
+const results = document.getElementById ("results")
+const gameOver = document.getElementById ("gameOver");
+const finalTime = document.getElementById("finalTime");
 const text = document.getElementById('text')
-
+const nextButton = document.getElementById('next-btn')
 var answerone = document.getElementById('one')
 var answertwo = document.getElementById('two')
 var answerthree = document.getElementById('three')
 var answerfour = document.getElementById('four')
+
 let shuffledQuestions, currentQuestionIndex
+
+var userInfo = document.getElementById ("userInfo");
+
+var finalScore = "";
+var finalInfo = 0;
+
 
 //timer vars 
 var timeElement= document.getElementById("timer");
@@ -84,8 +95,13 @@ var myCountDown = setInterval(function(){
     }
 }, 1000)//milliseceonds 
 
+// event listeners for start and next button
 startButton.addEventListener('click', startGame)
-
+nextButton.addEventListener('click', () => { 
+  currentQuestionIndex++
+  setNextQuestion()
+})
+// start game hides start button, shuffles questions,shows card body,hides intro,and starts timer.
 function startGame() {
 console.log('Started')
 startButton.classList.add('hide')
@@ -94,14 +110,15 @@ currentQuestionIndex = 0
 cardBodyElement.classList.remove('hide')
 text.classList.add('hide')
 timeElement.classList.remove ("hide");
+nextButton.classList.remove('hide')
 setNextQuestion()
 } 
 
-
+// function to set question
 function setNextQuestion() {
 showQuestion(shuffledQuestions[currentQuestionIndex])
 }
-
+// function to show answers 
 function showQuestion(question) {
   questionElement.innerText = question.question
   answerone.textContent= questions[currentQuestionIndex].answers[0].text
@@ -112,10 +129,22 @@ function showQuestion(question) {
 }
 
 function selectorAnswer(e) {
-
+  const selectedButton = e.target 
+  const correct = selectedButton.dataset.correct
+  setStatusClass(document.body, correct)
+  Array.from(answerButtonsElement.children).forEach(button => {
+    setStatusClass(button, button.dataset.correct)
+  })
 }
-
- 
+function setStatusClass(element, correct) {
+  clearStatusClass(element)
+  if (correct) {
+    element.classList.add('correct')
+    } else {
+      element.classList.add('wrong')
+    }
+  }
+//  Questions and anwsers
 const questions = [
   {
     question: 'Commonly used data types DO NOT include:',
@@ -163,47 +192,6 @@ const questions = [
     ]
   }
 ]
-
-
-
-
-
-
-
-
-
-
-
-
-// var timeEl = document.querySelector(".time");
-// var mainEl = document.getElementById("main");
-
-// var secondsLeft = 60;
-
-// function setTime() {
-//   var timerInterval = setInterval(function() {
-//     secondsLeft--;
-//     timeEl.textContent = secondsLeft + " seconds left";
-
-//     if(secondsLeft === 0) {
-//       clearInterval(timerInterval);
-//       sendMessage();
-//     }
-
-//   }, 1000);
-// }
-
-// function sendMessage() {
-//   timeEl.textContent = " ";
-
-//   var imgEl = document.createElement("img");
-
-//   imgEl.setAttribute("src", "images/image_1.jpg");
-//   mainEl.appendChild(imgEl);
-
-// }
-
-// setTime();
 </script>
 </body>
 </html>
