@@ -25,10 +25,10 @@
                     <div id="question-container" >
                     <div id="question">Question</div>
                     <div id="answer-buttons">
-                      <button id="one" class="btn">Answer 1</button>
-                      <button id="two" class="btn">Answer 2</button>
-                      <button id="three"class="btn">Answer 3</button>
-                      <button id="four" class="btn">Answer 4</button>
+                      <button id="1" class="btn">Answer 1</button>
+                      <button id="2" class="btn">Answer 2</button>
+                      <button id="3"class="btn">Answer 3</button>
+                      <button id="4" class="btn">Answer 4</button>
                    </div>
                   </div>
                </div>
@@ -67,10 +67,10 @@ const gameOver = document.getElementById ("gameOver");
 const finalTime = document.getElementById("finalTime");
 const text = document.getElementById('text')
 const nextButton = document.getElementById('next-btn')
-var answerone = document.getElementById('one')
-var answertwo = document.getElementById('two')
-var answerthree = document.getElementById('three')
-var answerfour = document.getElementById('four')
+var answerone = document.getElementById('1')
+var answertwo = document.getElementById('2')
+var answerthree = document.getElementById('3')
+var answerfour = document.getElementById('4')
 
 let shuffledQuestions, currentQuestionIndex
 
@@ -101,7 +101,7 @@ nextButton.addEventListener('click', () => {
   currentQuestionIndex++
   setNextQuestion()
 })
-// start game hides start button, shuffles questions,shows card body,hides intro,and starts timer.
+// start game hides start button, shuffles questions,shows card body,hides intro,,shows next button, and starts timer
 function startGame() {
 console.log('Started')
 startButton.classList.add('hide')
@@ -116,9 +116,10 @@ setNextQuestion()
 
 // function to set question
 function setNextQuestion() {
+  console.log('nexted')
 showQuestion(shuffledQuestions[currentQuestionIndex])
 }
-// function to show answers 
+// function to show answers and questions 
 function showQuestion(question) {
   questionElement.innerText = question.question
   answerone.textContent= questions[currentQuestionIndex].answers[0].text
@@ -127,23 +128,25 @@ function showQuestion(question) {
   answerfour.textContent= questions[currentQuestionIndex].answers[3].text
  
 }
+answerButtonsElement.addEventListener("click" , checkAnswer)
 
-function selectorAnswer(e) {
-  const selectedButton = e.target 
+function checkAnswer (e) {
+  e.preventDefault();
+  console.log(e.target)
+  var userAnswer = e.target.getAttribute("id");
+  const selectedButton = e.target
   const correct = selectedButton.dataset.correct
-  setStatusClass(document.body, correct)
-  Array.from(answerButtonsElement.children).forEach(button => {
-    setStatusClass(button, button.dataset.correct)
-  })
+  // console.log(userAnswer + "|" + questions[currentQuestionIndex].correct)
+  
+   if (questions[currentQuestionIndex]&&(userAnswer).correct === true) {
+     console.log ("yes");
+     } else {
+            console.log ("no");
+            secondsLeft -= 10;
+     }
+
+
 }
-function setStatusClass(element, correct) {
-  clearStatusClass(element)
-  if (correct) {
-    element.classList.add('correct')
-    } else {
-      element.classList.add('wrong')
-    }
-  }
 //  Questions and anwsers
 const questions = [
   {
